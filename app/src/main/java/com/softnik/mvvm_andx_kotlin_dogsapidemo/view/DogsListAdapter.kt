@@ -7,12 +7,15 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.softnik.mvvm_andx_kotlin_dogsapidemo.R
 import com.softnik.mvvm_andx_kotlin_dogsapidemo.model.DogBreed
+import com.softnik.mvvm_andx_kotlin_dogsapidemo.util.getProgressDrawable
+import com.softnik.mvvm_andx_kotlin_dogsapidemo.util.loadImage
 import kotlinx.android.synthetic.main.item_dogs.view.*
 
-class DogsListAdapter(val dogList : ArrayList<DogBreed>) :RecyclerView.Adapter<DogsListAdapter.DogViewHolder>(){
+class DogsListAdapter(val dogList: ArrayList<DogBreed>) :
+    RecyclerView.Adapter<DogsListAdapter.DogViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DogViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.item_dogs , parent  , false)
+        val view = inflater.inflate(R.layout.item_dogs, parent, false)
 
 
 
@@ -21,7 +24,7 @@ class DogsListAdapter(val dogList : ArrayList<DogBreed>) :RecyclerView.Adapter<D
     }
 
     override fun getItemCount(): Int {
-      return dogList.size
+        return dogList.size
     }
 
     override fun onBindViewHolder(holder: DogViewHolder, position: Int) {
@@ -30,11 +33,11 @@ class DogsListAdapter(val dogList : ArrayList<DogBreed>) :RecyclerView.Adapter<D
         holder.view.setOnClickListener {
             Navigation.findNavController(it).navigate(ListFragmentDirections.actionDetailFragment())
         }
-
+        holder.view.ivDog.loadImage(dogList[position].imageUrl , getProgressDrawable(holder.view.ivDog.context))
 
     }
 
-    fun updateDogsList(newDogsList : List<DogBreed>){
+    fun updateDogsList(newDogsList: List<DogBreed>) {
         dogList.clear()
         dogList.addAll(newDogsList)
         notifyDataSetChanged()
@@ -42,14 +45,10 @@ class DogsListAdapter(val dogList : ArrayList<DogBreed>) :RecyclerView.Adapter<D
     }
 
 
-    class DogViewHolder(var view: View):RecyclerView.ViewHolder(view){
-
-
-
+    class DogViewHolder(var view: View) : RecyclerView.ViewHolder(view) {
 
 
     }
-
 
 
 }

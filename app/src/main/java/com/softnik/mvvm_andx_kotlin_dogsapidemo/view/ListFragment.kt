@@ -46,6 +46,14 @@ class ListFragment : Fragment() {
 
         }
 
+        refreshLayout.setOnRefreshListener {
+            rvDogsList.visibility = View.GONE
+            tvErrorMsg.visibility = View.GONE
+            loadingView.visibility = View.VISIBLE
+            viewModel.refresh()
+            refreshLayout.isRefreshing = false
+        }
+
         observeViewModel()
 
       /*  btnList?.setOnClickListener {
